@@ -5,7 +5,7 @@ import { models } from "../models";
 export const searchEngineAutoCompleteAgent = new Agent({
   name: "Search Engine Auto Complete Agent",
   instructions: `
-  You are a search engine auto complete model. Given the  word/phrase, generate 10 suggestions completing it.
+  You are a search engine auto complete model. Given the  word/phrase, generate 5 suggestions completing it.
 `,
   model: openai(models.OPENAI.GPT_41_NANO),
 });
