@@ -1,6 +1,6 @@
 import { openai } from "@ai-sdk/openai";
 import { Agent } from "@mastra/core/agent";
-import models from "../models";
+import { models } from "../models";
 
 export const searchEngineAutoCompleteAgent = new Agent({
   name: "Search Engine Auto Complete Agent",
