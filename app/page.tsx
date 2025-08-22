@@ -1,17 +1,16 @@
+"use client";
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { MoveRightIcon } from "lucide-react";
 import { ModeToggle } from "../src/components/theme-toggle";
-import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { useAutoComplete } from "../src/hooks/useAutoComplete";
 
 export default function Home() {
   const [query, setQuery] = useState("");
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["auto-complete"],
-    queryFn: () =>
-      fetch("/api/auto-complete?query=hello").then((res) => res.json()),
-  });
+  const { data, isLoading, error } = useAutoComplete(query);
   return (
     <main className="w-full h-screen">
       <ModeToggle />
@@ -27,6 +26,17 @@ export default function Home() {
           <Button className="absolute rounded-lg right-3 bottom-3 transition-colors animate-in fade-in-0 duration-300 bg-zinc-800 text-zinc-200 hover:bg-zinc-700 cursor-pointer dark:bg-zinc-200 dark:text-zinc-800 dark:hover:bg-zinc-300">
             <MoveRightIcon className="w-4 h-4" />
           </Button>
+        </div>
+        <div className="w-full max-w-2xl text-sm text-zinc-400">
+          {isLoading && query ? <p>Loading…</p> : null}
+          {error ? <p>Something went wrong.</p> : null}
+          {data?.suggestions?.length ? (
+            <ul className="mt-2 list-disc pl-5">
+              {data.suggestions.map((s) => (
+                <li key={s}>{s}</li>
+              ))}
+            </ul>
+          ) : null}
         </div>
       </section>
     </main>

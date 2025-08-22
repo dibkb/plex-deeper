@@ -38,7 +38,7 @@ export async function GET(request: Request) {
         },
         required: ["suggestions"],
         additionalProperties: false,
-      } as any,
+      },
     }
   );
   const parsed = schema.safeParse(response.object);
