@@ -41,9 +41,9 @@ export default function Home() {
                 exit={{ opacity: 0, scaleY: 0.85 }}
                 transition={{ duration: 0.18, ease: "easeOut" }}
                 style={{ transformOrigin: "top" }}
-                className="absolute left-0 right-0 top-[calc(100%+0.3rem)] rounded-xl border border-zinc-700/40 bg-zinc-100/70 dark:bg-input/30 overflow-hidden"
+                className="absolute left-0 right-0 top-[calc(100%+0.3rem)] rounded-xl border border-zinc-300/40 dark:border-zinc-700/40 bg-zinc-100/10 dark:bg-input/30 overflow-hidden"
               >
-                <ul className="divide-y divide-zinc-700/20">
+                <ul className="divide-y dark:divide-zinc-700/20 divide-zinc-300/40">
                   {data.suggestions.map((suggestion, index) => (
                     <li
                       key={index}
@@ -53,7 +53,7 @@ export default function Home() {
                         <SearchIcon className="w-4 h-4" />
                         {suggestion}
                       </div>
-                      <ArrowUpLeftIcon className="w-4 h-4 text-teal-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <ArrowUpLeftIcon className="w-4 h-4 text-zinc-500 dark:text-zinc-200 opacity-0 group-hover:opacity-100 transition-opacity" />
                     </li>
                   ))}
                 </ul>
