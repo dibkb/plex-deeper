@@ -8,11 +8,11 @@ import { useState } from "react";
 import { useAutoComplete } from "../src/hooks/useAutoComplete";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
-
+import { SearchIcon, ArrowUpLeftIcon } from "lucide-react";
 export default function Home() {
   const [query, setQuery] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
   const { data, isLoading, error } = useAutoComplete(query);
-  console.log(data);
   return (
     <main className="w-full h-screen">
       <ModeToggle />
@@ -22,6 +22,8 @@ export default function Home() {
           <Textarea
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
             placeholder="Ask me anything..."
             className={cn(
               "w-full max-w-2xl h-28 resize-none focus-visible:ring-0 focus-visible:ring-offset-0 border-zinc-700 focus-visible:border-zinc-600 shadow-none focus-ring-0 placeholder:text-zinc-500 rounded-xl border-[1px] manrope-font !text-base"
@@ -31,7 +33,7 @@ export default function Home() {
             <MoveRightIcon className="w-4 h-4 " />
           </Button>
           <AnimatePresence>
-            {data?.suggestions && data.suggestions.length > 0 ? (
+            {isFocused && data?.suggestions && data.suggestions.length > 0 ? (
               <motion.div
                 key="suggestions-panel"
                 initial={{ opacity: 0, scaleY: 0.85 }}
@@ -39,15 +41,19 @@ export default function Home() {
                 exit={{ opacity: 0, scaleY: 0.85 }}
                 transition={{ duration: 0.18, ease: "easeOut" }}
                 style={{ transformOrigin: "top" }}
-                className="absolute left-0 right-0 top-[calc(100%+0.5rem)] rounded-xl border border-zinc-700/40 bg-zinc-100/70 dark:bg-input/30 shadow-xl overflow-hidden backdrop-blur supports-[backdrop-filter]:bg-zinc-100/40"
+                className="absolute left-0 right-0 top-[calc(100%+0.3rem)] rounded-xl border border-zinc-700/40 bg-zinc-100/70 dark:bg-input/30 overflow-hidden"
               >
                 <ul className="divide-y divide-zinc-700/20">
                   {data.suggestions.map((suggestion, index) => (
                     <li
                       key={index}
-                      className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-200 hover:bg-zinc-200/50 dark:hover:bg-zinc-800/60 cursor-pointer"
+                      className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-400 hover:bg-zinc-200/50 dark:hover:bg-zinc-800/60 cursor-pointer flex items-center justify-between gap-2 group"
                     >
-                      {suggestion}
+                      <div className="flex items-center gap-2">
+                        <SearchIcon className="w-4 h-4" />
+                        {suggestion}
+                      </div>
+                      <ArrowUpLeftIcon className="w-4 h-4 text-teal-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                     </li>
                   ))}
                 </ul>
