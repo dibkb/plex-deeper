@@ -1,9 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { MoveRightIcon } from "lucide-react";
-import { ModeToggle } from "./components/theme-toggle";
+import { ModeToggle } from "../src/components/theme-toggle";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 export default function Home() {
+  const [query, setQuery] = useState("");
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["auto-complete"],
+    queryFn: () =>
+      fetch("/api/auto-complete?query=hello").then((res) => res.json()),
+  });
   return (
     <main className="w-full h-screen">
       <ModeToggle />
@@ -11,6 +19,8 @@ export default function Home() {
         <h3 className="text-2xl text-zinc-400">perplex deeper</h3>
         <div className="w-full max-w-2xl relative">
           <Textarea
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
             placeholder="Ask me anything..."
             className="w-full max-w-2xl h-28 resize-none focus-visible:ring-0 focus-visible:ring-offset-0 border-zinc-700 focus-visible:border-zinc-600 shadow-none focus-ring-0 placeholder:text-zinc-500 rounded-xl border-[1px] manrope-font !text-base"
           />
