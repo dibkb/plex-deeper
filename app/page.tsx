@@ -7,10 +7,13 @@ import { MoveRightIcon } from "lucide-react";
 import { ModeToggle } from "../src/components/theme-toggle";
 import { useState } from "react";
 import { useAutoComplete } from "../src/hooks/useAutoComplete";
+import { cn } from "@/lib/utils";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function Home() {
   const [query, setQuery] = useState("");
   const { data, isLoading, error } = useAutoComplete(query);
+  console.log(data);
   return (
     <main className="w-full h-screen">
       <ModeToggle />
@@ -21,22 +24,37 @@ export default function Home() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Ask me anything..."
-            className="w-full max-w-2xl h-28 resize-none focus-visible:ring-0 focus-visible:ring-offset-0 border-zinc-700 focus-visible:border-zinc-600 shadow-none focus-ring-0 placeholder:text-zinc-500 rounded-xl border-[1px] manrope-font !text-base"
+            className={cn(
+              "w-full max-w-2xl h-28 resize-none focus-visible:ring-0 focus-visible:ring-offset-0 border-zinc-700 focus-visible:border-zinc-600 shadow-none focus-ring-0 placeholder:text-zinc-500 rounded-xl border-[1px] manrope-font !text-base"
+            )}
           />
           <Button className="absolute rounded-lg right-3 bottom-3 transition-colors animate-in fade-in-0 duration-300 bg-zinc-800 text-zinc-200 hover:bg-zinc-700 cursor-pointer dark:bg-zinc-200 dark:text-zinc-800 dark:hover:bg-zinc-300">
-            <MoveRightIcon className="w-4 h-4" />
+            <MoveRightIcon className="w-4 h-4 " />
           </Button>
-        </div>
-        <div className="w-full max-w-2xl text-sm text-zinc-400">
-          {isLoading && query ? <p>Loading…</p> : null}
-          {error ? <p>Something went wrong.</p> : null}
-          {data?.suggestions?.length ? (
-            <ul className="mt-2 list-disc pl-5">
-              {data.suggestions.map((s) => (
-                <li key={s}>{s}</li>
-              ))}
-            </ul>
-          ) : null}
+          <AnimatePresence>
+            {data?.suggestions && data.suggestions.length > 0 ? (
+              <motion.div
+                key="suggestions-panel"
+                initial={{ opacity: 0, scaleY: 0.85 }}
+                animate={{ opacity: 1, scaleY: 1 }}
+                exit={{ opacity: 0, scaleY: 0.85 }}
+                transition={{ duration: 0.18, ease: "easeOut" }}
+                style={{ transformOrigin: "top" }}
+                className="absolute left-0 right-0 top-[calc(100%+0.5rem)] rounded-xl border border-zinc-700/40 bg-zinc-100/70 dark:bg-input/30 shadow-xl overflow-hidden backdrop-blur supports-[backdrop-filter]:bg-zinc-100/40"
+              >
+                <ul className="divide-y divide-zinc-700/20">
+                  {data.suggestions.map((suggestion, index) => (
+                    <li
+                      key={index}
+                      className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-200 hover:bg-zinc-200/50 dark:hover:bg-zinc-800/60 cursor-pointer"
+                    >
+                      {suggestion}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ) : null}
+          </AnimatePresence>
         </div>
       </section>
     </main>
