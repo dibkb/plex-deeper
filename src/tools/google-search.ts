@@ -25,12 +25,14 @@ export async function googleSearch(input: string): Promise<{
     ) {
       throw new Error("Invalid response format from Google Search API");
     }
-    const searchItems = response.data.items.map((item: any) => ({
-      title: item.title,
-      link: item.link,
-      snippet: item.snippet,
-      formattedUrl: item.formattedUrl,
-    })) as GoogleSearchResults[];
+    const searchItems = response.data.items.map(
+      (item: GoogleSearchResults) => ({
+        title: item.title,
+        link: item.link,
+        snippet: item.snippet,
+        formattedUrl: item.formattedUrl,
+      })
+    ) as GoogleSearchResults[];
     return {
       success: true,
       data: searchItems,
