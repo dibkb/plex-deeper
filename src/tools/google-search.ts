@@ -1,6 +1,11 @@
 import axios from "axios";
+import { GoogleSearchResults } from "../types/google-search-results";
 
-export async function googleSearch(input: string): Promise<any> {
+export async function googleSearch(input: string): Promise<{
+  success: boolean;
+  data: GoogleSearchResults[];
+  error: string | null;
+}> {
   try {
     if (!process.env.GOOGLE_SEARCH_API_KEY) {
       throw new Error("GOOGLE_SEARCH_API_KEY is not configured");
@@ -25,7 +30,7 @@ export async function googleSearch(input: string): Promise<any> {
       link: item.link,
       snippet: item.snippet,
       formattedUrl: item.formattedUrl,
-    }));
+    })) as GoogleSearchResults[];
     return {
       success: true,
       data: searchItems,
@@ -35,7 +40,7 @@ export async function googleSearch(input: string): Promise<any> {
     console.error("Google Search error:", error);
     return {
       success: false,
-      data: null,
+      data: [],
       error:
         error instanceof Error ? error.message : "An unknown error occurred",
     };
