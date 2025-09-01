@@ -8,28 +8,29 @@ import { NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 export const runtime = "nodejs";
-
+import { z } from "zod";
 export interface QueryResponse {
   jobId: string;
   insertedId: string;
 }
-
+const schema = z.object({
+  query: z.string().min(1),
+});
 export async function POST(
   request: Request
 ): Promise<NextResponse<QueryResponse | ErrorResponse>> {
   try {
-    const { searchParams } = new URL(request.url);
-    const query = searchParams.get("search");
-    if (!query) {
+    const query = schema.safeParse(await request.json());
+    if (!query.success) {
       return NextResponse.json({ error: "Query is required" }, { status: 400 });
     }
-    const googleSearchResponse = await googleSearch(query);
-
+    const data = query.data;
+    const googleSearchResponse = await googleSearch(data.query);
     const [insertedRow] = await db
       .insert(queryResultsTable)
       .values({
         id: crypto.randomUUID().toString(),
-        query,
+        query: data.query,
         searchResults: googleSearchResponse.data,
         status: Status.PENDING,
       })
