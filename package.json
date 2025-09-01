@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "dev:mastra": "mastra dev --dir src/mastra",
-    "build:mastra": "mastra build --dir mastra"
+    "build:mastra": "mastra build --dir mastra",
+    "start:worker": "tsx workers/searchWorker.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^1.0.0",
@@ -22,6 +23,7 @@
     "@radix-ui/react-slot": "^1.2.3",
     "@tanstack/react-query": "^5.85.5",
     "axios": "^1.11.0",
+    "bee-queue": "^1.7.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dotenv": "^17.2.1",

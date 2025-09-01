@@ -15,7 +15,7 @@ import { Status } from "./types/status";
 const tableName = "query_results" as const;
 
 export const queryResultsTable = pgTable(tableName, {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  id: varchar({ length: 255 }).primaryKey(),
   status: varchar({ length: 255 })
     .$type<Status>()
     .notNull()
