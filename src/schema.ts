@@ -1,11 +1,5 @@
 import { InferInsertModel, InferSelectModel } from "drizzle-orm";
-import {
-  integer,
-  jsonb,
-  pgTable,
-  timestamp,
-  varchar,
-} from "drizzle-orm/pg-core";
+import { jsonb, pgTable, timestamp, varchar } from "drizzle-orm/pg-core";
 import {
   GoogleSearchResults,
   ScrapedResults,

@@ -3,12 +3,15 @@ import { searchEngineAutoCompleteAgent } from "@/src/mastra/agents/auto-complete
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 import { z } from "zod";
+import { ErrorResponse } from "@/src/types/http-response";
 const schema = z.object({
   suggestions: z.array(z.string()).min(5),
 });
 export type AutoCompleteResponse = z.infer<typeof schema>;
 
-export async function GET(request: Request) {
+export async function GET(
+  request: Request
+): Promise<NextResponse<AutoCompleteResponse | ErrorResponse>> {
   const { searchParams } = new URL(request.url);
   const query = searchParams.get("query");
   if (!query) {

@@ -14,7 +14,7 @@ export interface QueryResponse {
   insertedId: string;
 }
 
-export async function GET(
+export async function POST(
   request: Request
 ): Promise<NextResponse<QueryResponse | ErrorResponse>> {
   try {
