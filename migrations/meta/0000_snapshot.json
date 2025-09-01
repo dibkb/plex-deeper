@@ -1,5 +1,5 @@
 {
-  "id": "9f5cec84-f13d-42ea-9714-ba6cae28259a",
+  "id": "01b07e71-0193-431d-9318-eb2bc3406a82",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -25,11 +25,12 @@
             "cycle": false
           }
         },
-        "queryId": {
-          "name": "queryId",
+        "status": {
+          "name": "status",
           "type": "varchar(255)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "'pending'"
         },
         "query": {
           "name": "query",
@@ -42,7 +43,7 @@
           "type": "jsonb",
           "primaryKey": false,
           "notNull": false,
-          "default": "'{}'::jsonb"
+          "default": "'[]'::jsonb"
         },
         "searchResults": {
           "name": "searchResults",

@@ -16,6 +16,7 @@
     "@mastra/libsql": "^0.13.4",
     "@mastra/loggers": "^0.10.7",
     "@mastra/memory": "^0.13.1",
+    "@neondatabase/serverless": "^1.0.1",
     "@radix-ui/react-dropdown-menu": "^2.1.16",
     "@radix-ui/react-separator": "^1.1.7",
     "@radix-ui/react-slot": "^1.2.3",

@@ -9,8 +9,8 @@ import {
 import {
   GoogleSearchResults,
   ScrapedResults,
-} from "../types/google-search-results";
-import { Status } from "../types/status";
+} from "./types/google-search-results";
+import { Status } from "./types/status";
 
 const tableName = "query_results" as const;
 
