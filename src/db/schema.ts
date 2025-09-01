@@ -1,3 +1,4 @@
+import { InferInsertModel, InferSelectModel } from "drizzle-orm";
 import {
   integer,
   jsonb,
@@ -5,12 +6,25 @@ import {
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
+import {
+  GoogleSearchResults,
+  ScrapedResults,
+} from "../types/google-search-results";
+import { Status } from "../types/status";
 
-export const queryResultsTable = pgTable("query_results", {
+const tableName = "query_results" as const;
+
+export const queryResultsTable = pgTable(tableName, {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  queryId: varchar({ length: 255 }).notNull(),
+  status: varchar({ length: 255 })
+    .$type<Status>()
+    .notNull()
+    .default(Status.PENDING),
   query: varchar({ length: 255 }).notNull(),
-  scrapedResults: jsonb().default({}),
-  searchResults: jsonb().notNull(),
+  scrapedResults: jsonb().$type<ScrapedResults[]>().default([]),
+  searchResults: jsonb().$type<GoogleSearchResults[]>().notNull(),
   createdAt: timestamp().notNull().defaultNow(),
 });
+
+export type QueryResult = InferSelectModel<typeof queryResultsTable>;
+export type NewQueryResult = InferInsertModel<typeof queryResultsTable>;

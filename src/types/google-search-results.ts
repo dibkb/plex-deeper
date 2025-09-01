@@ -4,3 +4,8 @@ export interface GoogleSearchResults {
   snippet: string;
   formattedUrl: string;
 }
+export interface ScrapedResults {
+  title: string;
+  url: string;
+  content: string;
+}
