@@ -9,23 +9,36 @@ import { useAutoComplete } from "../src/hooks/useAutoComplete";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { SearchIcon, ArrowUpLeftIcon } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import axios, { AxiosError } from "axios";
+import { QueryResponse } from "./api/query/route";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { ErrorResponse } from "@/src/types/http-response";
+
 export default function Home() {
+  const router = useRouter();
   const [query, setQuery] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const { data, isLoading, error } = useAutoComplete(query);
-
-  const handleSubmit = () => {
-    chrome.runtime.sendMessage(
-      "hllpaboeikojhlocchflcampbcccjjaa",
-      {
-        type: "SCRAPE_URLS",
-        urls: ["https://example.com", "https://news.ycombinator.com"],
-      },
-      (resp) => {
-        console.log(resp);
-      }
-    );
-  };
+  const {
+    mutate: handleSubmit,
+    isPending,
+    error: submitError,
+  } = useMutation<QueryResponse, AxiosError, string>({
+    mutationFn: async (query: string) => {
+      const response = await axios.post("/api/query", { query });
+      return response.data;
+    },
+    onSuccess: (data) => {
+      const { insertedId } = data;
+      router.push(`/query/${insertedId}`);
+    },
+    onError: (error: AxiosError) => {
+      const data = error.response?.data as ErrorResponse;
+      toast.error(data.error || "Something went wrong");
+    },
+  });
   return (
     <main className="w-full h-screen">
       <ModeToggle />
@@ -43,7 +56,7 @@ export default function Home() {
             )}
           />
           <Button
-            onClick={handleSubmit}
+            onClick={() => handleSubmit(query)}
             className="absolute rounded-lg right-3 bottom-3 transition-colors animate-in fade-in-0 duration-300 bg-zinc-800 text-zinc-200 hover:bg-zinc-700 cursor-pointer dark:bg-zinc-200 dark:text-zinc-800 dark:hover:bg-zinc-300"
           >
             <MoveRightIcon className="w-4 h-4 " />
