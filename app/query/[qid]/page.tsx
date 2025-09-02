@@ -7,10 +7,10 @@ import axios from "axios";
 import { useParams } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { PageQueryEnum } from "@/src/types/nuqs";
-import { PageToggle } from "@/app/_coponents/page-toggle";
-import { ShortDescription } from "@/app/_coponents/pages/short-description";
-import { SourcesPreview } from "@/app/_coponents/souces-preview";
-import { SourcesPage } from "@/app/_coponents/pages/sources";
+import { PageToggle } from "@/app/_components/page-toggle";
+import { ShortDescription } from "@/app/_components/pages/short-description";
+import { SourcesPreview } from "@/app/_components/souces-preview";
+import { SourcesPage } from "@/app/_components/pages/sources";
 export default function QueryPage() {
   const [page] = useQueryState<PageQueryEnum>("page", {
     defaultValue: PageQueryEnum.SHORT_RESPONSE,
