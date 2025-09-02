@@ -1,5 +1,5 @@
 import { InferInsertModel, InferSelectModel } from "drizzle-orm";
-import { jsonb, pgTable, timestamp, varchar } from "drizzle-orm/pg-core";
+import { jsonb, pgTable, timestamp, varchar, text } from "drizzle-orm/pg-core";
 import {
   GoogleSearchResults,
   ScrapedResults,
@@ -17,6 +17,7 @@ export const queryResultsTable = pgTable(tableName, {
   query: varchar({ length: 255 }).notNull(),
   scrapedResults: jsonb().$type<ScrapedResults[]>().default([]),
   searchResults: jsonb().$type<GoogleSearchResults[]>().notNull(),
+  shortDescription: text().notNull().default(""),
   createdAt: timestamp().notNull().defaultNow(),
 });
 

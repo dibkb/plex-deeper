@@ -9,3 +9,12 @@ export const searchEngineAutoCompleteAgent = new Agent({
 `,
   model: openai(models.OPENAI.GPT_41_NANO),
 });
+
+export const shortDescriptionAgent = new Agent({
+  name: "Short Query Explanation",
+  instructions: `
+  You are a short query explanation model. Given the snippets of a google search, generate a short explanation expalining the user's query.
+  Output should be in markdown format.
+  `,
+  model: openai(models.OPENAI.GPT_41_NANO),
+});

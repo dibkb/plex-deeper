@@ -1,0 +1,78 @@
+{
+  "id": "4ecbec3a-bfc5-4d79-89e2-4eb72e8e374d",
+  "prevId": "541ff236-db32-4c09-ad74-11b9f544e76a",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.query_results": {
+      "name": "query_results",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(255)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'pending'"
+        },
+        "query": {
+          "name": "query",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "scrapedResults": {
+          "name": "scrapedResults",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'[]'::jsonb"
+        },
+        "searchResults": {
+          "name": "searchResults",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "shortDescription": {
+          "name": "shortDescription",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "''"
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

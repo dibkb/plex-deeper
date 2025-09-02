@@ -1,0 +1,1 @@
+ALTER TABLE "query_results" ADD COLUMN "shortDescription" text DEFAULT '' NOT NULL;

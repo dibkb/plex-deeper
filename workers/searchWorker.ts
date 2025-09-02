@@ -1,15 +1,55 @@
+import { db } from "@/src/db";
 import { createQueue } from "../lib/queue";
+import { queryResultsTable } from "@/src/schema";
+import { eq } from "drizzle-orm";
+import { shortDescriptionAgent } from "@/src/mastra/agents/auto-complete";
+import { ShortDescriptionSchema } from "@/src/types/agents";
+import { Status } from "@/src/types/status";
 
-const taskQueue = createQueue<{ jobId: string }>("search", true);
+const taskQueue = createQueue<{ queryId: string }>("search", true);
 
 taskQueue.process(5, async (job) => {
   console.log(`⚙️ Processing job`);
-  console.log(job.id);
-  console.log(job.data);
-  console.log(job.data.jobId);
+  const queryId = job.data.queryId;
   try {
-    const result = { message: "Task completed", input: job.data.jobId };
-    return result;
+    const [queryResult] = await db
+      .select()
+      .from(queryResultsTable)
+      .where(eq(queryResultsTable.id, queryId))
+      .execute();
+    if (!queryResult) {
+      throw new Error("Query result not found");
+    }
+    const { query, searchResults } = queryResult;
+    const response = await shortDescriptionAgent.generate(
+      [
+        {
+          role: "user",
+          content: [
+            {
+              type: "text",
+              text: `Query: ${query} \n Search Results: ${searchResults
+                .map((result) => `${result.title} \n ${result.snippet}`)
+                .join("\n")}`,
+            },
+          ],
+        },
+      ],
+      {
+        experimental_output: ShortDescriptionSchema,
+      }
+    );
+    const parsed = ShortDescriptionSchema.safeParse(response.object);
+    if (!parsed.success) {
+      throw new Error("Invalid response format from short description agent");
+    }
+    console.log(parsed.data);
+    const { shortDescription } = parsed.data;
+    await db
+      .update(queryResultsTable)
+      .set({ shortDescription, status: Status.PENDING_WEB_SCRAPING })
+      .where(eq(queryResultsTable.id, queryId))
+      .execute();
   } catch (err: any) {
     throw err;
   }
