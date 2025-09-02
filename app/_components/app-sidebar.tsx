@@ -3,6 +3,7 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
+  SidebarGroupLabel,
   SidebarHeader,
 } from "@/components/ui/sidebar";
 
@@ -11,8 +12,7 @@ export function AppSidebar() {
     <Sidebar className="bg-background">
       <SidebarHeader />
       <SidebarContent>
-        <SidebarGroup />
-        <SidebarGroup />
+        <SidebarGroupLabel>Search History</SidebarGroupLabel>
       </SidebarContent>
       <SidebarFooter />
     </Sidebar>
