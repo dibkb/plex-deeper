@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useAutoComplete } from "../src/hooks/useAutoComplete";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
-import { SearchIcon, ArrowUpLeftIcon } from "lucide-react";
+import { SearchIcon, ArrowUpLeftIcon, LoaderCircleIcon } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { QueryResponse } from "./api/query/route";
@@ -55,8 +55,13 @@ export default function Home() {
         <Button
           onClick={() => handleSubmit(query)}
           className="absolute rounded-lg right-3 bottom-3 transition-colors animate-in fade-in-0 duration-300 bg-zinc-800 text-zinc-200 hover:bg-zinc-700 cursor-pointer dark:bg-zinc-200 dark:text-zinc-800 dark:hover:bg-zinc-300"
+          disabled={isPending}
         >
-          <MoveRightIcon className="w-4 h-4 " />
+          {isPending ? (
+            <LoaderCircleIcon className="w-4 h-4 animate-spin" />
+          ) : (
+            <MoveRightIcon className="w-4 h-4" />
+          )}
         </Button>
         <AnimatePresence>
           {isFocused && data?.suggestions && data.suggestions.length > 0 ? (

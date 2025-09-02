@@ -26,9 +26,8 @@ export function PageToggle() {
     <main className="relative">
       <div className="flex gap-2 mt-3 ">
         {pages.map((item) => (
-          <main>
+          <main key={item.value}>
             <button
-              key={item.value}
               onClick={() => setPage(item.value)}
               className={cn(
                 "flex items-center gap-2 text-xs font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800/60 rounded-md px-4 py-2",
