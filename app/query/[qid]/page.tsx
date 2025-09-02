@@ -2,15 +2,15 @@
 import { QueryResultResponse } from "@/app/api/query/route";
 import { ibmPlexSerif } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
-import { Separator } from "@/components/ui/separator";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useParams } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { PageQueryEnum } from "@/src/types/nuqs";
 import { PageToggle } from "@/app/_coponents/page-toggle";
+import { ShortDescription } from "@/app/_coponents/pages/short-description";
 export default function QueryPage() {
-  const [page, setPage] = useQueryState<PageQueryEnum>("page", {
+  const [page] = useQueryState<PageQueryEnum>("page", {
     defaultValue: PageQueryEnum.SHORT_DESCRIPTION,
     parse: (value) => value as PageQueryEnum,
   });
@@ -39,6 +39,9 @@ export default function QueryPage() {
         {queryResult?.queryResult.query}
       </h3>
       <PageToggle />
+      {page === PageQueryEnum.SHORT_DESCRIPTION && (
+        <ShortDescription queryResult={queryResult!} />
+      )}
     </main>
   );
 }
