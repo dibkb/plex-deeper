@@ -11,7 +11,7 @@ export const runtime = "nodejs";
 import { z } from "zod";
 export interface QueryResponse {
   jobId: string;
-  insertedId: string;
+  queryId: string;
 }
 const schema = z.object({
   query: z.string().min(1),
@@ -38,11 +38,11 @@ export async function POST(
       .execute();
 
     const job = await taskQueue
-      .createJob({ jobId: insertedRow.insertedId.toString() })
+      .createJob({ queryId: insertedRow.insertedId.toString() })
       .save();
     const response = NextResponse.json({
       jobId: job.id,
-      insertedId: insertedRow.insertedId,
+      queryId: insertedRow.insertedId,
     });
     return response;
   } catch (error) {
