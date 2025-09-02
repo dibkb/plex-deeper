@@ -9,7 +9,8 @@ import { useQueryState } from "nuqs";
 import { PageQueryEnum } from "@/src/types/nuqs";
 import { PageToggle } from "@/app/_coponents/page-toggle";
 import { ShortDescription } from "@/app/_coponents/pages/short-description";
-import { SourcesPreview } from "@/app/_coponents/pages/souces-preview";
+import { SourcesPreview } from "@/app/_coponents/souces-preview";
+import { SourcesPage } from "@/app/_coponents/pages/sources";
 export default function QueryPage() {
   const [page] = useQueryState<PageQueryEnum>("page", {
     defaultValue: PageQueryEnum.SHORT_DESCRIPTION,
@@ -43,6 +44,9 @@ export default function QueryPage() {
       <SourcesPreview queryResult={queryResult!} />
       {page === PageQueryEnum.SHORT_DESCRIPTION && (
         <ShortDescription queryResult={queryResult!} />
+      )}
+      {page === PageQueryEnum.SOURCES && (
+        <SourcesPage sources={queryResult?.queryResult.searchResults || []} />
       )}
     </main>
   );
