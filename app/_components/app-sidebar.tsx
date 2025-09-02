@@ -13,6 +13,8 @@ import { HistoryResponse } from "../api/history/route";
 import { useParams, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { PlusIcon } from "lucide-react";
 
 export function AppSidebar() {
   const { data, isLoading, error } = useQuery<HistoryResponse[]>({
@@ -53,7 +55,18 @@ export function AppSidebar() {
   return (
     <Sidebar className="bg-background">
       <SidebarHeader />
+
       <SidebarContent>
+        <SidebarGroup>
+          <Button
+            variant="ghost"
+            className="w-full"
+            onClick={() => router.push("/")}
+          >
+            <PlusIcon className="w-4 h-4" />
+            New Search
+          </Button>
+        </SidebarGroup>
         <SidebarGroupLabel className="px-2">Search History</SidebarGroupLabel>
         <SidebarGroup className="">{historyRender}</SidebarGroup>
       </SidebarContent>
