@@ -1,6 +1,5 @@
 "use client";
 import { QueryResultResponse } from "@/app/api/query/route";
-import { Separator } from "@/components/ui/separator";
 import getFavicon from "@/lib/utils";
 
 export function SourcesPreview({

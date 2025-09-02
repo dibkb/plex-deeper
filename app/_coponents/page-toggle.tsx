@@ -1,7 +1,7 @@
+"use client";
 import { useQueryState } from "nuqs";
 import { PageQueryEnum } from "@/src/types/nuqs";
-import { ScanIcon, CompassIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ScanIcon, CompassIcon, BookOpenIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 
@@ -15,6 +15,11 @@ const pages = [
     label: "Detailed Results",
     value: PageQueryEnum.DETAILED_RESULTS,
     icon: <CompassIcon className="w-4 h-4" />,
+  },
+  {
+    label: "Sources",
+    value: PageQueryEnum.SOURCES,
+    icon: <BookOpenIcon className="w-4 h-4" />,
   },
 ];
 export function PageToggle() {
