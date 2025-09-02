@@ -8,6 +8,7 @@ import axios from "axios";
 import { useParams } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { PageQueryEnum } from "@/src/types/nuqs";
+import { PageToggle } from "@/app/_coponents/page-toggle";
 export default function QueryPage() {
   const [page, setPage] = useQueryState<PageQueryEnum>("page", {
     defaultValue: PageQueryEnum.SHORT_DESCRIPTION,
@@ -36,8 +37,8 @@ export default function QueryPage() {
         )}
       >
         {queryResult?.queryResult.query}
-        <Separator className="my-4" />
       </h3>
+      <PageToggle />
     </main>
   );
 }
