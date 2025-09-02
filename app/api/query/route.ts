@@ -1,9 +1,10 @@
 import { taskQueue } from "@/lib/queues";
 import { db } from "@/src/db";
-import { queryResultsTable } from "@/src/schema";
+import { QueryResult, queryResultsTable } from "@/src/schema";
 import { googleSearch } from "@/src/tools/google-search";
 import { ErrorResponse } from "@/src/types/http-response";
 import { Status } from "@/src/types/status";
+import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -12,6 +13,9 @@ import { z } from "zod";
 export interface QueryResponse {
   jobId: string;
   queryId: string;
+}
+export interface QueryResultResponse {
+  queryResult: QueryResult;
 }
 const schema = z.object({
   query: z.string().min(1),
@@ -53,4 +57,30 @@ export async function POST(
       { status: 500 }
     );
   }
+}
+
+export async function GET(
+  request: Request
+): Promise<NextResponse<QueryResultResponse | ErrorResponse>> {
+  const { searchParams } = new URL(request.url);
+  const qid = searchParams.get("qid");
+  console.log(qid);
+  if (!qid) {
+    return NextResponse.json(
+      { error: "Query ID is required" },
+      { status: 400 }
+    );
+  }
+  const [queryResult] = await db
+    .select()
+    .from(queryResultsTable)
+    .where(eq(queryResultsTable.id, qid))
+    .execute();
+  if (!queryResult) {
+    return NextResponse.json(
+      { error: "Query result not found" },
+      { status: 404 }
+    );
+  }
+  return NextResponse.json({ queryResult });
 }

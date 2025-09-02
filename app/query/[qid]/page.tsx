@@ -1,6 +1,37 @@
 "use client";
+import { QueryResultResponse } from "@/app/api/query/route";
+import { ibmPlexSerif } from "@/lib/fonts";
+import { cn } from "@/lib/utils";
+import { Separator } from "@/components/ui/separator";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { useParams } from "next/navigation";
 export default function QueryPage() {
   const { qid } = useParams();
-  return <main className="pt-16">Query: {qid}</main>;
+  const {
+    data: queryResult,
+    isLoading,
+    error,
+  } = useQuery<QueryResultResponse>({
+    queryKey: ["query", qid],
+    queryFn: () =>
+      axios
+        .get<QueryResultResponse>(`/api/query`, { params: { qid } })
+        .then((res) => res.data),
+    enabled: Boolean(qid),
+    refetchInterval: 1000,
+  });
+  return (
+    <main className="pt-16 max-w-4xl mx-auto">
+      <h3
+        className={cn(
+          ibmPlexSerif.className,
+          "text-3xl text-zinc-900 dark:text-zinc-200"
+        )}
+      >
+        {queryResult?.queryResult.query}
+        <Separator className="my-4" />
+      </h3>
+    </main>
+  );
 }
