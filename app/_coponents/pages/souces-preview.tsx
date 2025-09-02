@@ -1,18 +1,24 @@
 "use client";
 import { QueryResultResponse } from "@/app/api/query/route";
+import { Button } from "@/components/ui/button";
 import getFavicon from "@/lib/utils";
+import { PageQueryEnum } from "@/src/types/nuqs";
+import { useQueryState } from "nuqs";
 
 export function SourcesPreview({
   queryResult,
 }: {
   queryResult: QueryResultResponse;
 }) {
+  const [page, setPage] = useQueryState<PageQueryEnum>("page", {
+    defaultValue: PageQueryEnum.SHORT_DESCRIPTION,
+    parse: (value) => value as PageQueryEnum,
+  });
   const sources = queryResult?.queryResult.searchResults || [];
-
   const sourcesRendered = sources.slice(0, 3).map((source) => (
     <div
       key={source.link}
-      className="flex flex-col gap-2 px-4 py-2 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800/60 cursor-pointer"
+      className="flex flex-col gap-2 px-4 py-2 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800/60 cursor-pointer col-span-2"
       onClick={() => window.open(source.formattedUrl, "_blank")}
     >
       <span className="flex items-center gap-2">
@@ -33,7 +39,18 @@ export function SourcesPreview({
   ));
   return (
     <main className="my-4">
-      <div className="grid grid-cols-3 gap-4">{sourcesRendered}</div>
+      <div className="grid grid-cols-7 gap-4">
+        {sourcesRendered}
+        {page !== PageQueryEnum.SOURCES && (
+          <Button
+            variant="outline"
+            className="col-span-1"
+            onClick={() => setPage(PageQueryEnum.SOURCES)}
+          >
+            View all {sources.length > 3 ? `+${sources.length - 3}` : ""}
+          </Button>
+        )}
+      </div>
     </main>
   );
 }
