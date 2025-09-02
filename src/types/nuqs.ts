@@ -1,5 +1,5 @@
 export enum PageQueryEnum {
-  SHORT_DESCRIPTION = "short-description",
+  SHORT_RESPONSE = "short-response",
   DETAILED_RESULTS = "detailed-results",
   SOURCES = "sources",
 }

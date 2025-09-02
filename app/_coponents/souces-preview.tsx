@@ -11,7 +11,7 @@ export function SourcesPreview({
   queryResult: QueryResultResponse;
 }) {
   const [page, setPage] = useQueryState<PageQueryEnum>("page", {
-    defaultValue: PageQueryEnum.SHORT_DESCRIPTION,
+    defaultValue: PageQueryEnum.SHORT_RESPONSE,
     parse: (value) => value as PageQueryEnum,
   });
 

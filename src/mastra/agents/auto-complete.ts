@@ -13,8 +13,8 @@ export const searchEngineAutoCompleteAgent = new Agent({
 export const shortDescriptionAgent = new Agent({
   name: "Short Query Explanation",
   instructions: `
-  You are a short query explanation model. Given the snippets of a google search, generate a short explanation expalining the user's query.
-  Output should be in markdown format.
+  Given the user's query and the search results, generate a response explaining the user's query.
+  Be verbose and detailed in your response. Add your own knowledge to the response. to answer the user's query. but should be grounded in the search results.
   `,
   model: openai(models.OPENAI.GPT_41_NANO),
 });

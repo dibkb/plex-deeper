@@ -7,8 +7,8 @@ import { Separator } from "@/components/ui/separator";
 
 const pages = [
   {
-    label: "Short Description",
-    value: PageQueryEnum.SHORT_DESCRIPTION,
+    label: "Short Response",
+    value: PageQueryEnum.SHORT_RESPONSE,
     icon: <ScanIcon className="w-4 h-4" />,
   },
   {
@@ -25,7 +25,7 @@ const pages = [
 export function PageToggle() {
   const [page, setPage] = useQueryState<PageQueryEnum>("page", {
     parse: (value) => value as PageQueryEnum,
-    defaultValue: PageQueryEnum.SHORT_DESCRIPTION,
+    defaultValue: PageQueryEnum.SHORT_RESPONSE,
   });
   return (
     <main className="relative">

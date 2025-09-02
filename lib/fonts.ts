@@ -3,6 +3,7 @@ import {
   Geist_Mono,
   IBM_Plex_Serif,
   Playfair_Display,
+  Manrope,
 } from "next/font/google";
 
 const geistSans = Geist({
@@ -26,4 +27,9 @@ const playfairDisplay = Playfair_Display({
   weight: ["400", "500", "600", "700"],
 });
 
-export { geistSans, geistMono, ibmPlexSerif, playfairDisplay };
+const manrope = Manrope({
+  variable: "--font-manrope",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+export { geistSans, geistMono, ibmPlexSerif, playfairDisplay, manrope };

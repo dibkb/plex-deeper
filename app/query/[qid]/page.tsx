@@ -13,7 +13,7 @@ import { SourcesPreview } from "@/app/_coponents/souces-preview";
 import { SourcesPage } from "@/app/_coponents/pages/sources";
 export default function QueryPage() {
   const [page] = useQueryState<PageQueryEnum>("page", {
-    defaultValue: PageQueryEnum.SHORT_DESCRIPTION,
+    defaultValue: PageQueryEnum.SHORT_RESPONSE,
     parse: (value) => value as PageQueryEnum,
   });
   const { qid } = useParams();
@@ -30,6 +30,7 @@ export default function QueryPage() {
     enabled: Boolean(qid),
     refetchInterval: 1000,
   });
+  console.log(queryResult);
   return (
     <main className="pt-16 max-w-4xl mx-auto">
       <h3
@@ -42,8 +43,10 @@ export default function QueryPage() {
       </h3>
       <PageToggle />
       <SourcesPreview queryResult={queryResult!} />
-      {page === PageQueryEnum.SHORT_DESCRIPTION && (
-        <ShortDescription queryResult={queryResult!} />
+      {page === PageQueryEnum.SHORT_RESPONSE && (
+        <ShortDescription
+          shortDescription={queryResult?.queryResult.shortDescription || ""}
+        />
       )}
       {page === PageQueryEnum.SOURCES && (
         <SourcesPage sources={queryResult?.queryResult.searchResults || []} />
