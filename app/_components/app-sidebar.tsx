@@ -12,6 +12,7 @@ import axios from "axios";
 import { HistoryResponse } from "../api/history/route";
 import { useParams, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 export function AppSidebar() {
   const { data, isLoading, error } = useQuery<HistoryResponse[]>({
@@ -24,24 +25,36 @@ export function AppSidebar() {
   const router = useRouter();
   const { qid } = useParams();
   const historyRender = data?.map((history) => (
-    <button
+    <motion.button
       key={history.id}
       className={cn(
-        "cursor-pointer w-full text-left truncate text-sm text-zinc-500 dark:text-zinc-500 px-2 py-1 font-medium",
+        "cursor-pointer w-full text-left truncate text-sm text-zinc-500 dark:text-zinc-500 px-2 py-1 font-medium rounded-md transition-colors hover:text-zinc-900 dark:hover:text-zinc-100",
         qid === history.id && "text-zinc-900 dark:text-zinc-100"
       )}
       onClick={() => {
         router.push(`/query/${history.id}`);
       }}
+      whileHover={{
+        backgroundColor: "rgba(0, 0, 0, 0.05)",
+        scale: 1.02,
+      }}
+      whileTap={{
+        scale: 0.98,
+        backgroundColor: "rgba(0, 0, 0, 0.1)",
+      }}
+      transition={{
+        duration: 0.15,
+        ease: "easeOut",
+      }}
     >
       {history.query}
-    </button>
+    </motion.button>
   ));
   return (
     <Sidebar className="bg-background">
       <SidebarHeader />
       <SidebarContent>
-        <SidebarGroupLabel>Search History</SidebarGroupLabel>
+        <SidebarGroupLabel className="px-2">Search History</SidebarGroupLabel>
         <SidebarGroup className="">{historyRender}</SidebarGroup>
       </SidebarContent>
       <SidebarFooter />
