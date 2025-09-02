@@ -6,7 +6,13 @@ import { Separator } from "@/components/ui/separator";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useParams } from "next/navigation";
+import { useQueryState } from "nuqs";
+import { PageQueryEnum } from "@/src/types/nuqs";
 export default function QueryPage() {
+  const [page, setPage] = useQueryState<PageQueryEnum>("page", {
+    defaultValue: PageQueryEnum.SHORT_DESCRIPTION,
+    parse: (value) => value as PageQueryEnum,
+  });
   const { qid } = useParams();
   const {
     data: queryResult,
