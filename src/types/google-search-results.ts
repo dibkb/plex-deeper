@@ -1,11 +1,15 @@
+import { z } from "zod";
 export interface GoogleSearchResults {
   title: string;
   link: string;
   snippet: string;
   formattedUrl: string;
 }
-export interface ScrapedResults {
-  title: string;
-  url: string;
-  content: string;
-}
+export const ScrapedResultsSchema = z.array(
+  z.object({
+    title: z.string(),
+    url: z.string(),
+    content: z.string(),
+  })
+);
+export type ScrapedResults = z.infer<typeof ScrapedResultsSchema>;

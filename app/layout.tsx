@@ -21,12 +21,10 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <main className="w-full h-screen">
-            <Providers>
-              <ModeToggle />
-              {children}
-            </Providers>
-          </main>
+          <Providers>
+            <ModeToggle />
+            <main className="w-full h-screen">{children}</main>
+          </Providers>
         </body>
       </html>
     </>

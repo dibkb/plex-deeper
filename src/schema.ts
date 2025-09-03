@@ -15,7 +15,7 @@ export const queryResultsTable = pgTable(tableName, {
     .notNull()
     .default(Status.PENDING),
   query: varchar({ length: 255 }).notNull(),
-  scrapedResults: jsonb().$type<ScrapedResults[]>().default([]),
+  scrapedResults: jsonb().$type<ScrapedResults>().default([]),
   searchResults: jsonb().$type<GoogleSearchResults[]>().notNull(),
   shortDescription: text().notNull().default(""),
   createdAt: timestamp().notNull().defaultNow(),

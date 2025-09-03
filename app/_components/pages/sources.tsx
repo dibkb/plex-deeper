@@ -8,7 +8,7 @@ export function SourcesPage({ sources }: { sources: GoogleSearchResults[] }) {
       {sources.map((source) => (
         <div
           key={source.link}
-          className="flex flex-col gap-2 px-4 py-4 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800/60 cursor-pointer col-span-2"
+          className="flex flex-col gap-2 px-4 py-2 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800/60 cursor-pointer col-span-2"
           onClick={() => window.open(source.formattedUrl, "_blank")}
         >
           <span className="flex items-center gap-2">
