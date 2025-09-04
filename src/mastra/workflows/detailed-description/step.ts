@@ -14,7 +14,7 @@ export const descriptionGenerationStep = createStep({
   outputSchema: DetailedDescriptionWorkflowOutputSchema,
   execute: async ({ inputData }) => {
     try {
-      const { queryResult, scrapedResults } = inputData;
+      const { query, scrapedResults } = inputData;
 
       const response = await detailedDescriptionAgent.generate(
         [
@@ -23,7 +23,7 @@ export const descriptionGenerationStep = createStep({
             content: [
               {
                 type: "text",
-                text: `Query: ${queryResult} \n Search Results: ${scrapedResults
+                text: `Query: ${query} \n Search Results: ${scrapedResults
                   .map((result) => `${result.title} \n ${result.content}`)
                   .join("\n")}`,
               },
