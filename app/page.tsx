@@ -55,7 +55,9 @@ export default function Home() {
           )}
         />
         <Button
-          onClick={() => handleSubmit(query)}
+          onClick={() => {
+            handleSubmit(query);
+          }}
           className="absolute rounded-lg right-3 bottom-3 transition-colors animate-in fade-in-0 duration-300 bg-zinc-800 text-zinc-200 hover:bg-zinc-700 cursor-pointer dark:bg-zinc-200 dark:text-zinc-800 dark:hover:bg-zinc-300"
           disabled={isPending}
         >
@@ -81,7 +83,11 @@ export default function Home() {
                   <li
                     key={index}
                     className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-400 hover:bg-zinc-200/50 dark:hover:bg-zinc-800/60 cursor-pointer flex items-center justify-between gap-2 group"
-                    onClick={() => handleSubmit(suggestion)}
+                    onClick={() => {
+                      setQuery(suggestion);
+                      handleSubmit(suggestion);
+                      setIsFocused(false);
+                    }}
                   >
                     <div className="flex items-center gap-2">
                       <SearchIcon className="w-4 h-4" />

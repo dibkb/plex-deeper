@@ -31,7 +31,7 @@ detailedDescriptionQueue.process(5, async (job) => {
       .where(eq(queryResultsTable.id, queryId))
       .execute();
     const workflow = mastra.getWorkflow("detailedDescriptionWorkflow");
-    const run = workflow.createRun({});
+    const run = await workflow.createRunAsync();
     const result = await run.start({
       inputData: {
         query: queryResult.query,
