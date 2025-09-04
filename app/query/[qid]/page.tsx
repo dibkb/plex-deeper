@@ -51,7 +51,9 @@ export default function QueryPage() {
       {page === PageQueryEnum.DETAILED_RESULTS && (
         <DetailedDescription
           status={queryResult?.queryResult.status}
-          detailedDescription={queryResult?.queryResult.detailedDescription}
+          detailedDescription={
+            queryResult?.queryResult.detailedDescription || []
+          }
         />
       )}
       {page === PageQueryEnum.SOURCES && (

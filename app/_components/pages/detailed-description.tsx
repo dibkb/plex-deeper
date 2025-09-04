@@ -1,9 +1,9 @@
 "use client";
 import { Status } from "@/src/types/status";
-
+import { DetailedDescription as DetailedDescriptionType } from "@/src/types/detailed-description";
 interface DetailedDescriptionProps {
   status: Status | undefined;
-  detailedDescription: string | undefined;
+  detailedDescription: DetailedDescriptionType[] | undefined;
 }
 
 export function DetailedDescription({

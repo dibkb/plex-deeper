@@ -2,7 +2,6 @@ import { db } from "@/src/db";
 import { createQueue } from "../lib/queue";
 import { QueueType } from "@/lib/queue-type";
 import { mastra } from "@/src/mastra";
-import { WorkflowType } from "@/src/mastra/type";
 import { queryResultsTable } from "@/src/schema";
 import { eq } from "drizzle-orm";
 import { Status } from "@/src/types/status";
@@ -41,7 +40,7 @@ detailedDescriptionQueue.process(5, async (job) => {
     if (result.status !== "success") {
       throw new Error("Failed to search company info");
     }
-    const markdownContent = result.result.markdownContent;
+    const markdownContent = result.result.detailedDescription;
     await db
       .update(queryResultsTable)
       .set({

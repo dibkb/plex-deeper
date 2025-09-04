@@ -1,11 +1,10 @@
 import { createStep } from "@mastra/core/workflows";
-import { DETAILED_DESCRIPTION_STEPS, WorkflowType } from "../../type";
+import { DETAILED_DESCRIPTION_STEPS } from "../../type";
 import {
   DetailedDescriptionWorkflowInputSchema,
   DetailedDescriptionWorkflowOutputSchema,
-  markdownGenerationInputSchema,
 } from "./schema";
-import { detailedDescriptionAgent, markdownGenerationAgent } from "./agent";
+import { detailedDescriptionAgent } from "./agent";
 
 export const descriptionGenerationStep = createStep({
   id: DETAILED_DESCRIPTION_STEPS["description-generation"],
@@ -53,54 +52,7 @@ export const descriptionGenerationStep = createStep({
         }`
       );
       return {
-        detailedDescription: "",
-      };
-    }
-  },
-});
-
-export const markdownGenerationStep = createStep({
-  id: DETAILED_DESCRIPTION_STEPS["markdown-generation"],
-  description: "Generates a markdown version of the detailed description",
-  inputSchema: DetailedDescriptionWorkflowOutputSchema,
-  outputSchema: markdownGenerationInputSchema,
-  execute: async ({ inputData }) => {
-    try {
-      const { detailedDescription } = inputData;
-      const response = await markdownGenerationAgent.generate(
-        [
-          {
-            role: "user",
-            content: [
-              {
-                type: "text",
-                text: detailedDescription,
-              },
-            ],
-          },
-        ],
-        {
-          experimental_output: markdownGenerationInputSchema,
-        }
-      );
-      const parsed = markdownGenerationInputSchema.safeParse(response.object);
-      if (!parsed.success) {
-        throw new Error(
-          "Invalid response format from markdown generation agent"
-        );
-      }
-      const { markdownContent } = parsed.data;
-      return {
-        markdownContent,
-      };
-    } catch (error) {
-      console.error(
-        `Step 'markdown-generation' failed with agent 'markdownGenerationAgent': ${
-          error instanceof Error ? error.message : "Unknown error"
-        }`
-      );
-      return {
-        markdownContent: "",
+        detailedDescription: [],
       };
     }
   },

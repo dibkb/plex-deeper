@@ -5,6 +5,7 @@ import {
   ScrapedResults,
 } from "./types/google-search-results";
 import { Status } from "./types/status";
+import { DetailedDescription } from "./types/detailed-description";
 
 const tableName = "query_results" as const;
 
@@ -18,7 +19,10 @@ export const queryResultsTable = pgTable(tableName, {
   scrapedResults: jsonb().$type<ScrapedResults>().default([]),
   searchResults: jsonb().$type<GoogleSearchResults[]>().notNull(),
   shortDescription: text().notNull().default(""),
-  detailedDescription: text().notNull().default(""),
+  detailedDescription: jsonb()
+    .$type<DetailedDescription[]>()
+    .notNull()
+    .default([]),
   createdAt: timestamp().notNull().defaultNow(),
 });
 
