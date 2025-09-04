@@ -22,9 +22,9 @@ export async function scrapeWebsite(
             title: result?.title,
             url: result?.url,
             content: result?.text,
+            image: result?.imgurl,
           }));
         const responseData = ScrapedResultsSchema.safeParse(results);
-        console.log("responseData", responseData.data);
       }
     );
   }

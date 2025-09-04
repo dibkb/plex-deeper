@@ -10,6 +10,7 @@ export const ScrapedResultsSchema = z.array(
     title: z.string(),
     url: z.string(),
     content: z.string(),
+    image: z.array(z.string()),
   })
 );
 export type ScrapedResults = z.infer<typeof ScrapedResultsSchema>;

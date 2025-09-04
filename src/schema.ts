@@ -18,6 +18,7 @@ export const queryResultsTable = pgTable(tableName, {
   scrapedResults: jsonb().$type<ScrapedResults>().default([]),
   searchResults: jsonb().$type<GoogleSearchResults[]>().notNull(),
   shortDescription: text().notNull().default(""),
+  detailedDescription: text().notNull().default(""),
   createdAt: timestamp().notNull().defaultNow(),
 });
 

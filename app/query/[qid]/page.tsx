@@ -11,7 +11,6 @@ import { PageToggle } from "@/app/_components/page-toggle";
 import { ShortDescription } from "@/app/_components/pages/short-description";
 import { SourcesPreview } from "@/app/_components/souces-preview";
 import { SourcesPage } from "@/app/_components/pages/sources";
-import { scrapeWebsite } from "@/src/chomre-scrape";
 export default function QueryPage() {
   const [page] = useQueryState<PageQueryEnum>("page", {
     defaultValue: PageQueryEnum.SHORT_RESPONSE,
@@ -31,10 +30,6 @@ export default function QueryPage() {
     enabled: Boolean(qid),
     refetchInterval: 1000,
   });
-  scrapeWebsite(
-    queryResult?.queryResult.searchResults.map((result) => result.link) || [],
-    queryResult?.queryResult.status
-  );
   return (
     <main className="pt-16 max-w-4xl mx-auto">
       <h3

@@ -1,0 +1,1 @@
+ALTER TABLE "query_results" ADD COLUMN "detailedDescription" text DEFAULT '' NOT NULL;
