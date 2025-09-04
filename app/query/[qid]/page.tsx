@@ -11,12 +11,13 @@ import { PageToggle } from "@/app/_components/page-toggle";
 import { ShortDescription } from "@/app/_components/pages/short-description";
 import { SourcesPreview } from "@/app/_components/souces-preview";
 import { SourcesPage } from "@/app/_components/pages/sources";
+import { DetailedDescription } from "@/app/_components/pages/detailed-description";
 export default function QueryPage() {
   const [page] = useQueryState<PageQueryEnum>("page", {
     defaultValue: PageQueryEnum.SHORT_RESPONSE,
     parse: (value) => value as PageQueryEnum,
   });
-  const { qid } = useParams();
+  const { qid } = useParams<{ qid: string }>();
   const {
     data: queryResult,
     isLoading,
@@ -45,6 +46,12 @@ export default function QueryPage() {
       {page === PageQueryEnum.SHORT_RESPONSE && (
         <ShortDescription
           shortDescription={queryResult?.queryResult.shortDescription || ""}
+        />
+      )}
+      {page === PageQueryEnum.DETAILED_RESULTS && (
+        <DetailedDescription
+          status={queryResult?.queryResult.status}
+          detailedDescription={queryResult?.queryResult.detailedDescription}
         />
       )}
       {page === PageQueryEnum.SOURCES && (
