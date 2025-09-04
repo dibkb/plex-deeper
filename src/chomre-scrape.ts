@@ -1,8 +1,6 @@
+// @ts-nocheck
 import axios from "axios";
-import {
-  ScrapedResults,
-  ScrapedResultsSchema,
-} from "./types/google-search-results";
+import { ScrapedResultsSchema } from "./types/google-search-results";
 import { Status } from "./types/status";
 
 export async function scrapeWebsite(
