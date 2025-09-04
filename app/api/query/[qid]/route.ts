@@ -1,3 +1,4 @@
+import { detailedDescriptionQueue } from "@/lib/queues";
 import { db } from "@/src/db";
 import { queryResultsTable } from "@/src/schema";
 import { ScrapedResultsSchema } from "@/src/types/google-search-results";
@@ -55,7 +56,10 @@ export async function POST(
       })
       .where(eq(queryResultsTable.id, qid))
       .execute();
-    return NextResponse.json({ success: true });
+    const job = await detailedDescriptionQueue
+      .createJob({ queryId: qid })
+      .save();
+    return NextResponse.json({ success: true, jobId: job.id });
   } catch (error) {
     return NextResponse.json(
       {
