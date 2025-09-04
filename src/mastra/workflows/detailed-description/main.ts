@@ -4,9 +4,13 @@ import {
   DetailedDescriptionWorkflowInputSchema,
   markdownGenerationInputSchema,
 } from "./schema";
+import { descriptionGenerationStep, markdownGenerationStep } from "./step";
 
 export const detailedDescriptionWorkflow = createWorkflow({
   id: WorkflowType.DETAILED_DESCRIPTION,
   inputSchema: DetailedDescriptionWorkflowInputSchema,
   outputSchema: markdownGenerationInputSchema,
-}).commit();
+})
+  .then(descriptionGenerationStep)
+  .then(markdownGenerationStep)
+  .commit();

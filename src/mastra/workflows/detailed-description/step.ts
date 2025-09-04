@@ -5,6 +5,7 @@ import {
   DetailedDescriptionWorkflowOutputSchema,
   markdownGenerationInputSchema,
 } from "./schema";
+import { detailedDescriptionAgent, markdownGenerationAgent } from "./agent";
 
 export const descriptionGenerationStep = createStep({
   id: DETAILED_DESCRIPTION_STEPS["description-generation"],
@@ -13,8 +14,37 @@ export const descriptionGenerationStep = createStep({
   outputSchema: DetailedDescriptionWorkflowOutputSchema,
   execute: async ({ inputData }) => {
     try {
+      const { queryResult, scrapedResults } = inputData;
+
+      const response = await detailedDescriptionAgent.generate(
+        [
+          {
+            role: "user",
+            content: [
+              {
+                type: "text",
+                text: `Query: ${queryResult} \n Search Results: ${scrapedResults
+                  .map((result) => `${result.title} \n ${result.content}`)
+                  .join("\n")}`,
+              },
+            ],
+          },
+        ],
+        {
+          experimental_output: DetailedDescriptionWorkflowOutputSchema,
+        }
+      );
+      const parsed = DetailedDescriptionWorkflowOutputSchema.safeParse(
+        response.object
+      );
+      if (!parsed.success) {
+        throw new Error(
+          "Invalid response format from detailed description agent"
+        );
+      }
+      const { detailedDescription } = parsed.data;
       return {
-        detailedDescription: "",
+        detailedDescription,
       };
     } catch (error) {
       console.error(
@@ -36,8 +66,32 @@ export const markdownGenerationStep = createStep({
   outputSchema: markdownGenerationInputSchema,
   execute: async ({ inputData }) => {
     try {
+      const { detailedDescription } = inputData;
+      const response = await markdownGenerationAgent.generate(
+        [
+          {
+            role: "user",
+            content: [
+              {
+                type: "text",
+                text: detailedDescription,
+              },
+            ],
+          },
+        ],
+        {
+          experimental_output: markdownGenerationInputSchema,
+        }
+      );
+      const parsed = markdownGenerationInputSchema.safeParse(response.object);
+      if (!parsed.success) {
+        throw new Error(
+          "Invalid response format from markdown generation agent"
+        );
+      }
+      const { markdownContent } = parsed.data;
       return {
-        markdownContent: "",
+        markdownContent,
       };
     } catch (error) {
       console.error(
