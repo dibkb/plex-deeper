@@ -1,5 +1,5 @@
 import { db } from "@/src/db";
-import { QueryResult, queryResultsTable } from "@/src/schema";
+import { queryResultsTable } from "@/src/schema";
 import { GoogleSearchResults } from "@/src/types/google-search-results";
 import { ErrorResponse } from "@/src/types/http-response";
 import { Status } from "@/src/types/status";
