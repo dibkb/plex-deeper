@@ -5,16 +5,47 @@ import { ErrorResponse } from "@/src/types/http-response";
 import { Status } from "@/src/types/status";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
-
-export async function PUT(
+type NextRequestContext = {
+  params: Promise<{
+    qid: string;
+  }>;
+};
+export async function POST(
   request: Request,
-  { params }: { params: { qid: string } }
+  { params }: NextRequestContext
 ): Promise<NextResponse<{ success: boolean } | ErrorResponse>> {
   try {
-    const { qid } = params;
-    const results = ScrapedResultsSchema.safeParse(await request.json());
+    const { qid } = await params;
+    const { scrapedResults } = await request.json();
+    console.log("❤️ POSTING endpoint ❤️", qid, scrapedResults);
+    const results = ScrapedResultsSchema.safeParse(scrapedResults);
+
     if (!results.success) {
-      return NextResponse.json({ error: "Invalid results" }, { status: 400 });
+      return NextResponse.json(
+        { error: results.error.message },
+        { status: 400 }
+      );
+    }
+    const [item] = await db
+      .select({
+        id: queryResultsTable.id,
+        status: queryResultsTable.status,
+      })
+      .from(queryResultsTable)
+      .where(eq(queryResultsTable.id, qid))
+      .limit(1)
+      .execute();
+    if (!item) {
+      return NextResponse.json(
+        { error: "Query result not found" },
+        { status: 404 }
+      );
+    }
+    if (item.status === Status.WEB_SCRAPING_COMPLETED) {
+      return NextResponse.json(
+        { error: "Query result already scraped" },
+        { status: 400 }
+      );
     }
     await db
       .update(queryResultsTable)

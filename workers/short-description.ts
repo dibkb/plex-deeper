@@ -5,10 +5,14 @@ import { eq } from "drizzle-orm";
 import { shortDescriptionAgent } from "@/src/mastra/agents/auto-complete";
 import { ShortDescriptionSchema } from "@/src/types/agents";
 import { Status } from "@/src/types/status";
+import { QueueType } from "@/lib/queue-type";
 
-const taskQueue = createQueue<{ queryId: string }>("search", true);
+const shortDescriptionQueue = createQueue<{ queryId: string }>(
+  QueueType.SHORT_DESCRIPTION,
+  true
+);
 
-taskQueue.process(5, async (job) => {
+shortDescriptionQueue.process(5, async (job) => {
   console.log(`⚙️ Processing job`);
   const queryId = job.data.queryId;
   try {
@@ -43,7 +47,6 @@ taskQueue.process(5, async (job) => {
     if (!parsed.success) {
       throw new Error("Invalid response format from short description agent");
     }
-    console.log(parsed.data);
     const { shortDescription } = parsed.data;
     await db
       .update(queryResultsTable)

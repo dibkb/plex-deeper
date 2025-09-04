@@ -1,17 +1,21 @@
-// @ts-nocheck
-import { ScrapedResultsSchema } from "./types/google-search-results";
+import axios from "axios";
+import {
+  ScrapedResults,
+  ScrapedResultsSchema,
+} from "./types/google-search-results";
 import { Status } from "./types/status";
 
 export async function scrapeWebsite(
   urls: string[],
-  status: Status | undefined
+  status: Status | undefined = Status.PENDING_WEB_SCRAPING,
+  id: string
 ) {
   const EXTENSION_ID = "hllpaboeikojhlocchflcampbcccjjaa";
   if (status === Status.PENDING_WEB_SCRAPING) {
     chrome.runtime.sendMessage(
       EXTENSION_ID,
       { type: "SCRAPE_URLS", urls: urls.slice(0, 3) },
-      (response) => {
+      async (response) => {
         if (chrome.runtime.lastError) {
           console.error(chrome.runtime.lastError);
           return;
@@ -25,6 +29,11 @@ export async function scrapeWebsite(
             image: result?.imgurl,
           }));
         const responseData = ScrapedResultsSchema.safeParse(results);
+        if (responseData.success) {
+          await axios.post(`/api/query/${id}`, {
+            scrapedResults: responseData.data,
+          });
+        }
       }
     );
   }

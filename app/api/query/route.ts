@@ -1,4 +1,4 @@
-import { taskQueue } from "@/lib/queues";
+import { shortDescriptionQueue } from "@/lib/queues";
 import { db } from "@/src/db";
 import { QueryResult, queryResultsTable } from "@/src/schema";
 import { googleSearch } from "@/src/tools/google-search";
@@ -41,7 +41,7 @@ export async function POST(
       .returning({ insertedId: queryResultsTable.id })
       .execute();
 
-    const job = await taskQueue
+    const job = await shortDescriptionQueue
       .createJob({ queryId: insertedRow.insertedId.toString() })
       .save();
     const response = NextResponse.json({
@@ -64,7 +64,6 @@ export async function GET(
 ): Promise<NextResponse<QueryResultResponse | ErrorResponse>> {
   const { searchParams } = new URL(request.url);
   const qid = searchParams.get("qid");
-  console.log(qid);
   if (!qid) {
     return NextResponse.json(
       { error: "Query ID is required" },

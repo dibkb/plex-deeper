@@ -25,7 +25,7 @@ export async function GET(
       .from(queryResultsTable)
       .where(eq(queryResultsTable.status, Status.PENDING_WEB_SCRAPING))
       .orderBy(asc(queryResultsTable.createdAt))
-      .limit(3)
+      .limit(1)
       .execute();
     return NextResponse.json(results);
   } catch (error) {
