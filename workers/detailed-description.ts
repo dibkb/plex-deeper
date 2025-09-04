@@ -40,11 +40,11 @@ detailedDescriptionQueue.process(5, async (job) => {
     if (result.status !== "success") {
       throw new Error("Failed to search company info");
     }
-    const markdownContent = result.result.detailedDescription;
+    const detailedDescription = result.result.detailedDescription;
     await db
       .update(queryResultsTable)
       .set({
-        detailedDescription: markdownContent,
+        detailedDescription: detailedDescription,
         status: Status.SUCCESS,
       })
       .where(eq(queryResultsTable.id, queryId))
