@@ -18,7 +18,6 @@ export async function POST(
   try {
     const { qid } = await params;
     const { scrapedResults } = await request.json();
-    console.log("❤️ POSTING endpoint ❤️", qid, scrapedResults);
     const results = ScrapedResultsSchema.safeParse(scrapedResults);
 
     if (!results.success) {
