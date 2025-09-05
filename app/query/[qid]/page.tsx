@@ -45,6 +45,7 @@ export default function QueryPage() {
       <SourcesPreview queryResult={queryResult!} />
       {page === PageQueryEnum.SHORT_RESPONSE && (
         <ShortDescription
+          status={queryResult?.queryResult.status}
           shortDescription={queryResult?.queryResult.shortDescription || ""}
         />
       )}
