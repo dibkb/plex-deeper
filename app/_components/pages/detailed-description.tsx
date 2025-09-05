@@ -44,8 +44,8 @@ export function DetailedDescription({
       );
     case Status.SUCCESS:
       return (
-        <main className="mt-2">
-          <div className="flex flex-col gap-2">
+        <main className="my-2">
+          <div className="flex flex-col gap-2 pb-4">
             {detailedDescription?.map((item) => (
               <div key={item.heading}>
                 <h3 className={cn("text-lg font-medium mb-2")}>
