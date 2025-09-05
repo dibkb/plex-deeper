@@ -4,14 +4,17 @@ import { DetailedDescription as DetailedDescriptionType } from "@/src/types/deta
 import { cn } from "@/lib/utils";
 import { DotIcon } from "lucide-react";
 import { LoadingScreen } from "../loading-screen";
+import { ImagesPreview } from "../images-preview";
 interface DetailedDescriptionProps {
   status: Status | undefined;
   detailedDescription: DetailedDescriptionType[] | undefined;
+  images: string[];
 }
 
 export function DetailedDescription({
   status,
   detailedDescription,
+  images,
 }: DetailedDescriptionProps) {
   switch (status) {
     case Status.PENDING:
@@ -45,6 +48,7 @@ export function DetailedDescription({
     case Status.SUCCESS:
       return (
         <main className="my-2">
+          <ImagesPreview images={images || []} />
           <div className="flex flex-col gap-2 pb-4">
             {detailedDescription?.map((item) => (
               <div key={item.heading}>

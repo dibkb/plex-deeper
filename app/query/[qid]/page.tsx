@@ -55,6 +55,11 @@ export default function QueryPage() {
           detailedDescription={
             queryResult?.queryResult.detailedDescription || []
           }
+          images={
+            queryResult?.queryResult.scrapedResults
+              ?.flatMap((result) => result.image)
+              .slice(0, 4) || []
+          }
         />
       )}
       {page === PageQueryEnum.SOURCES && (
