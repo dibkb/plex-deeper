@@ -1,6 +1,7 @@
 import { InferInsertModel, InferSelectModel } from "drizzle-orm";
 import { jsonb, pgTable, timestamp, varchar, text } from "drizzle-orm/pg-core";
 import {
+  GoogleSearchImage,
   GoogleSearchResults,
   ScrapedResults,
 } from "./types/google-search-results";
@@ -19,6 +20,7 @@ export const queryResultsTable = pgTable(tableName, {
   scrapedResults: jsonb().$type<ScrapedResults>().default([]),
   searchResults: jsonb().$type<GoogleSearchResults[]>().notNull(),
   shortDescription: text().notNull().default(""),
+  images: jsonb().$type<GoogleSearchImage[]>().notNull().default([]),
   detailedDescription: jsonb()
     .$type<DetailedDescription[]>()
     .notNull()

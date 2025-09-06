@@ -5,6 +5,7 @@ import { mastra } from "@/src/mastra";
 import { queryResultsTable } from "@/src/schema";
 import { eq } from "drizzle-orm";
 import { Status } from "@/src/types/status";
+import { googleSearch, googleSearchImages } from "@/src/tools/google-search";
 
 const detailedDescriptionQueue = createQueue<{ queryId: string }>(
   QueueType.DETAILED_DESCRIPTION,
@@ -24,9 +25,15 @@ detailedDescriptionQueue.process(5, async (job) => {
       throw new Error("Query result not found");
     }
     //   mark the query result as generating response
+    const googleSearchImagesResponse = await googleSearchImages(
+      queryResult.query
+    );
     await db
       .update(queryResultsTable)
-      .set({ status: Status.GENERATING_RESPONSE })
+      .set({
+        status: Status.GENERATING_RESPONSE,
+        images: googleSearchImagesResponse.data,
+      })
       .where(eq(queryResultsTable.id, queryId))
       .execute();
     const workflow = mastra.getWorkflow("detailedDescriptionWorkflow");

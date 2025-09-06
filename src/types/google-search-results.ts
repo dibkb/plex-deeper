@@ -14,3 +14,10 @@ export const ScrapedResultsSchema = z.array(
   })
 );
 export type ScrapedResults = z.infer<typeof ScrapedResultsSchema>;
+
+export const GoogleSearchImagesResultsSchema = z.object({
+  title: z.string(),
+  link: z.string(),
+  displayLink: z.string(),
+});
+export type GoogleSearchImage = z.infer<typeof GoogleSearchImagesResultsSchema>;

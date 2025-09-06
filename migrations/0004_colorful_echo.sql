@@ -1,0 +1,1 @@
+ALTER TABLE "query_results" ADD COLUMN "images" jsonb DEFAULT '[]'::jsonb NOT NULL;

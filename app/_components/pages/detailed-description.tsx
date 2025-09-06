@@ -5,10 +5,11 @@ import { cn } from "@/lib/utils";
 import { DotIcon } from "lucide-react";
 import { LoadingScreen } from "../loading-screen";
 import { ImagesPreview } from "../images-preview";
+import { GoogleSearchImage } from "@/src/types/google-search-results";
 interface DetailedDescriptionProps {
   status: Status | undefined;
   detailedDescription: DetailedDescriptionType[] | undefined;
-  images: string[];
+  images: GoogleSearchImage[];
 }
 
 export function DetailedDescription({
