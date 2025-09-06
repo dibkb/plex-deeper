@@ -12,6 +12,7 @@ import { ShortDescription } from "@/app/_components/pages/short-description";
 import { SourcesPreview } from "@/app/_components/souces-preview";
 import { SourcesPage } from "@/app/_components/pages/sources";
 import { DetailedDescription } from "@/app/_components/pages/detailed-description";
+import { ImagesPage } from "@/app/_components/pages/images-page";
 export default function QueryPage() {
   const [page] = useQueryState<PageQueryEnum>("page", {
     defaultValue: PageQueryEnum.SHORT_RESPONSE,
@@ -60,6 +61,9 @@ export default function QueryPage() {
       )}
       {page === PageQueryEnum.SOURCES && (
         <SourcesPage sources={queryResult?.queryResult.searchResults || []} />
+      )}
+      {page === PageQueryEnum.IMAGES && (
+        <ImagesPage images={queryResult?.queryResult.images || []} />
       )}
     </main>
   );

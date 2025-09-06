@@ -1,11 +1,18 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { GoogleSearchImage } from "@/src/types/google-search-results";
+import { PageQueryEnum } from "@/src/types/nuqs";
+import { useQueryState } from "nuqs";
 import { useState } from "react";
 export function ImagesPreview({ images }: { images: GoogleSearchImage[] }) {
   const [isHover, setIsHover] = useState<number | undefined>(undefined);
+  const [_, setPage] = useQueryState<PageQueryEnum>("page", {
+    defaultValue: PageQueryEnum.SHORT_RESPONSE,
+    parse: (value) => value as PageQueryEnum,
+  });
   return (
-    <div className="mt-4 mb-8 grid grid-cols-4 gap-2">
+    <div className="mt-4 mb-8 grid grid-cols-4 gap-2 relative">
       {images.slice(0, 4).map((image, idx) => (
         <div
           key={image.title + idx}
@@ -30,6 +37,13 @@ export function ImagesPreview({ images }: { images: GoogleSearchImage[] }) {
           </p>
         </div>
       ))}
+      <Button
+        className="absolute bottom-4 right-4"
+        variant="secondary"
+        onClick={() => setPage(PageQueryEnum.IMAGES)}
+      >
+        View all {images.length > 4 ? `+${images.length - 4}` : ""} more images
+      </Button>
     </div>
   );
 }

@@ -21,6 +21,11 @@ const pages = [
     value: PageQueryEnum.SOURCES,
     icon: <BookOpenIcon className="w-4 h-4" />,
   },
+  {
+    label: "Images",
+    value: PageQueryEnum.IMAGES,
+    icon: <BookOpenIcon className="w-4 h-4" />,
+  },
 ];
 export function PageToggle() {
   const [page, setPage] = useQueryState<PageQueryEnum>("page", {
