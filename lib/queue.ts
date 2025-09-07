@@ -1,8 +1,9 @@
 import Queue from "bee-queue";
+import redisConfig from "./redis-config";
 
 export function createQueue<T>(name: string, isWorker = false) {
   return new Queue<T>(name, {
-    redis: { host: "127.0.0.1", port: 9000 },
+    redis: redisConfig,
     isWorker,
   });
 }
