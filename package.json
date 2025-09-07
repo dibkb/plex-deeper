@@ -11,7 +11,7 @@
     "build:mastra": "mastra build --dir mastra",
     "start:worker-short-description": "tsx workers/short-description.ts",
     "start:worker-detailed-description": "tsx workers/detailed-description.ts",
-    "start:worker": "concurrently \"npm run start:worker-short-description\" \"npm run start:worker-detailed-description\" \"tsx workers/health.ts\""
+    "start:worker": "concurrently \"npm run start:worker-short-description\" \"npm run start:worker-detailed-description\""
   },
   "dependencies": {
     "@ai-sdk/openai": "^1.0.0",
