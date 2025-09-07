@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Plex Deeper
 
-## Getting Started
+A Next.js application with Mastra AI agents for enhanced content analysis and description generation.
 
-First, run the development server:
+## Local Setup
+
+### 1. Clone and Install Dependencies
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd plex-deeper
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Environment Configuration
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Create a `.env` file in the root directory with the following variables:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# Database
+DATABASE_URL=your_neon_database_url
 
-## Learn More
+# Redis
+REDIS_URL=your_redis_url
 
-To learn more about Next.js, take a look at the following resources:
+# OpenAI
+OPENAI_API_KEY=your_openai_api_key
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Google Search API
+GOOGLE_SEARCH_API_KEY=your_google_search_api_key
+GOOGLE_SEARCH_ENGINE_ID=your_google_search_engine_id
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 3. Run the Application
 
-## Deploy on Vercel
+Start the development server:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+pnpm dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+In a separate terminal, start the background workers:
+
+```bash
+pnpm run start:worker
+```
+
+This will run both:
+
+- Short description worker
+- Detailed description worker
+
+### 4. Install Browser Extension
+
+Install the Query X extension from: https://github.com/dibkb/query-x-extension
+
+## Available Scripts
+
+- `pnpm dev` - Start the Next.js development server
+- `pnpm run start:worker` - Start all background workers
+- `pnpm run start:worker-short-description` - Start only the short description worker
+- `pnpm run start:worker-detailed-description` - Start only the detailed description worker
+- `pnpm run dev:mastra` - Start Mastra development server
+- `pnpm run build:mastra` - Build Mastra workflows
+
+## Tech Stack
+
+- **Framework**: Next.js 15 with App Router
+- **AI**: Mastra with OpenAI integration
+- **Database**: Neon (PostgreSQL) with Drizzle ORM
+- **Queue**: Redis with Bee Queue
+- **UI**: Shadcn UI with Tailwind CSS
+- **State Management**: TanStack Query
+
+## Features
+
+- AI-powered content analysis
+- Background job processing
+- Real-time search capabilities
+- Modern responsive UI
