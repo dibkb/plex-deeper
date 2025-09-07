@@ -1,4 +1,5 @@
-// @ts-nocheck
+// @typescript-eslint/no-explicit-any
+
 import axios from "axios";
 import { ScrapedResultsSchema } from "./types/google-search-results";
 import { Status } from "./types/status";
