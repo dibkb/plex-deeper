@@ -13,9 +13,9 @@ export interface PendingResponse {
   id: string;
   searchResults: GoogleSearchResults[];
 }
-export async function GET(
-  request: Request
-): Promise<NextResponse<PendingResponse[] | ErrorResponse>> {
+export async function GET(): Promise<
+  NextResponse<PendingResponse[] | ErrorResponse>
+> {
   try {
     const results = await db
       .select({

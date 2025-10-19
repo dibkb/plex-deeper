@@ -16,6 +16,7 @@ export default function getFavicon(url: string) {
     return `https://cdn.brandfetch.io/${hostname}/w/400/h/400`;
   } catch (error) {
     // Return a default favicon if URL is invalid
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return "/favicon.ico";
   }
 }

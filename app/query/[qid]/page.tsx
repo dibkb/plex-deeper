@@ -19,11 +19,7 @@ export default function QueryPage() {
     parse: (value) => value as PageQueryEnum,
   });
   const { qid } = useParams<{ qid: string }>();
-  const {
-    data: queryResult,
-    isLoading,
-    error,
-  } = useQuery<QueryResultResponse>({
+  const { data: queryResult } = useQuery<QueryResultResponse>({
     queryKey: ["query", qid],
     queryFn: () =>
       axios

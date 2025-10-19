@@ -11,9 +11,9 @@ export type HistoryResponse = {
   createdAt: Date;
   id: string;
 };
-export async function GET(
-  request: Request
-): Promise<NextResponse<HistoryResponse[] | ErrorResponse>> {
+export async function GET(): Promise<
+  NextResponse<HistoryResponse[] | ErrorResponse>
+> {
   try {
     const response = await db
       .select({

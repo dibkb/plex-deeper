@@ -132,10 +132,10 @@ export const SaveExtensionId = () => {
                       </code>
                     </p>
                     <p className="text-zinc-300 text-sm mt-1">
-                      2. Enable "Developer mode" (toggle in top right)
+                      2. Enable &quot;Developer mode&quot; (toggle in top right)
                     </p>
                     <p className="text-zinc-300 text-sm mt-1">
-                      3. Click "Load unpacked" and select the{" "}
+                      3. Click &quot;Load unpacked&quot; and select the{" "}
                       <code className="bg-zinc-800 px-1 rounded">dist</code>{" "}
                       folder
                     </p>

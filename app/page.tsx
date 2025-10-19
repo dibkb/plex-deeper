@@ -21,14 +21,14 @@ export default function Home() {
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [isFocused, setIsFocused] = useState(false);
-  const { data, isLoading, error } = useAutoComplete(query);
+  const { data } = useAutoComplete(query);
   const queryClient = useQueryClient();
   const hasExtensionId = useCheckExtensionId();
-  const {
-    mutate: handleSubmit,
-    isPending,
-    error: submitError,
-  } = useMutation<QueryResponse, AxiosError, string>({
+  const { mutate: handleSubmit, isPending } = useMutation<
+    QueryResponse,
+    AxiosError,
+    string
+  >({
     mutationFn: async (query: string) => {
       const response = await axios.post("/api/query", { query });
       return response.data;
