@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  queue-worker:
+    image: dibkb/query-x-queue:production
+    environment:
+      # Redis configuration (Upstash)
+      - REDIS_URL=${REDIS_URL}
+
+      # Database configuration
+      - DATABASE_URL=${DATABASE_URL}
+
+      # Google Search API
+      - GOOGLE_SEARCH_API_KEY=${GOOGLE_SEARCH_API_KEY}
+      - GOOGLE_SEARCH_ENGINE_ID=${GOOGLE_SEARCH_ENGINE_ID}
+
+      # OpenAI API
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+
+      # Node environment
+      - NODE_ENV=production
+    command: pnpm start:worker
+    restart: always
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          memory: 512M
+          cpus: "0.5"
+        reservations:
+          memory: 256M
+          cpus: "0.25"
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "tsx workers"]
+      interval: 15s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
