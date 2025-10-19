@@ -112,3 +112,54 @@ Install the Query X extension from: [https://github.com/dibkb/query-x-extension]
 - 📱 **Modern responsive UI** - Clean, accessible interface built with Shadcn UI
 - 🔧 **Browser extension support** - Query X extension integration
 - 🎯 **Detailed descriptions** - Enhanced content analysis and description generation
+
+## Docker Compose Setup (Recommended)
+
+For running the queue workers with Upstash Redis:
+
+1. Create a `.env` file with your environment variables:
+
+```bash
+# Database Configuration
+DATABASE_URL=your_database_url_here
+
+# Upstash Redis Configuration
+REDIS_URL=your_upstash_redis_url_here
+
+# Google Search API
+GOOGLE_SEARCH_API_KEY=your_google_search_api_key
+GOOGLE_SEARCH_ENGINE_ID=your_google_search_engine_id
+
+# OpenAI API
+OPENAI_API_KEY=your_openai_api_key
+```
+
+2. Start the queue workers:
+
+```bash
+docker-compose up
+```
+
+This will start:
+
+- Queue workers (short description + detailed description) connected to Upstash Redis
+
+3. Run your Next.js app locally:
+
+```bash
+pnpm dev
+```
+
+## Docker Run (Alternative)
+
+For running just the queue workers:
+
+```bash
+docker run -p 3000:3000 \
+  -e DATABASE_URL="your_database_url" \
+  -e REDIS_URL="your_upstash_redis_url" \
+  -e OPENAI_API_KEY="your_openai_key" \
+  -e GOOGLE_SEARCH_API_KEY="your_google_key" \
+  -e GOOGLE_SEARCH_ENGINE_ID="your_engine_id" \
+  plex-deeper
+```
