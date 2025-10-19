@@ -71,3 +71,8 @@ process.on("SIGINT", () => {
   console.log("📴 Short description worker shutting down gracefully...");
   process.exit(0);
 });
+
+shortDescriptionQueue.on("error", (err) => {
+  console.error("Redis error – exiting so PM2 restarts the worker", err);
+  process.exit(1);
+});
