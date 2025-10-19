@@ -13,7 +13,7 @@ const shortDescriptionQueue = createQueue<{ queryId: string }>(
 );
 
 shortDescriptionQueue.process(5, async (job) => {
-  console.log(`⚙️ Processing job`);
+  console.log(`⚙️ Processing short description job`);
   const queryId = job.data.queryId;
   try {
     const [queryResult] = await db
