@@ -1,13 +1,13 @@
 import axios from "axios";
 import { ScrapedResultsSchema } from "./types/google-search-results";
 import { Status } from "./types/status";
+import { EXTENSION_ID } from "@/const";
 
 export async function scrapeWebsite(
   urls: string[],
   status: Status | undefined = Status.PENDING_WEB_SCRAPING,
   id: string
 ) {
-  const EXTENSION_ID = "hllpaboeikojhlocchflcampbcccjjaa";
   if (status === Status.PENDING_WEB_SCRAPING) {
     chrome.runtime.sendMessage(
       EXTENSION_ID,

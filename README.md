@@ -1,8 +1,24 @@
 # Plex Deeper
 
+<div align="center">
+
+![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+
 A Next.js application with Mastra AI agents for enhanced content analysis and description generation.
 
-## Local Setup
+</div>
+
+## 📋 Table of Contents
+
+- [Local Setup](#local-setup)
+- [Available Scripts](#available-scripts)
+- [Tech Stack](#tech-stack)
+- [Features](#features)
+
+## 🚀 Local Setup
 
 ### 1. Clone and Install Dependencies
 
@@ -52,29 +68,47 @@ This will run both:
 
 ### 4. Install Browser Extension
 
-Install the Query X extension from: https://github.com/dibkb/query-x-extension
+Install the Query X extension from: [https://github.com/dibkb/query-x-extension](https://github.com/dibkb/query-x-extension)
 
-## Available Scripts
+1. **Install dependencies**: `pnpm install`
+2. **Build the extension**: `pnpm run build`
+3. **Load in Chrome**:
+   - Open Chrome and navigate to `chrome://extensions/`
+   - Enable "Developer mode" (toggle in top right)
+   - Click "Load unpacked" and select the `dist` folder created in step 2
+4. **Get Extension ID**:
+   - Copy the extension ID from the extensions page (e.g., `lmahehkeleeobdljhkilajlgebegemfl`)
+5. **Update Configuration**:
+   - Update the extension ID in `const.ts`
 
-- `pnpm dev` - Start the Next.js development server
-- `pnpm run start:worker` - Start all background workers
-- `pnpm run start:worker-short-description` - Start only the short description worker
-- `pnpm run start:worker-detailed-description` - Start only the detailed description worker
-- `pnpm run dev:mastra` - Start Mastra development server
-- `pnpm run build:mastra` - Build Mastra workflows
+## 📜 Available Scripts
 
-## Tech Stack
+| Command                                      | Description                                |
+| -------------------------------------------- | ------------------------------------------ |
+| `pnpm dev`                                   | Start the Next.js development server       |
+| `pnpm run start:worker`                      | Start all background workers               |
+| `pnpm run start:worker-short-description`    | Start only the short description worker    |
+| `pnpm run start:worker-detailed-description` | Start only the detailed description worker |
+| `pnpm run dev:mastra`                        | Start Mastra development server            |
+| `pnpm run build:mastra`                      | Build Mastra workflows                     |
 
-- **Framework**: Next.js 15 with App Router
-- **AI**: Mastra with OpenAI integration
-- **Database**: Neon (PostgreSQL) with Drizzle ORM
-- **Queue**: Redis with Bee Queue
-- **UI**: Shadcn UI with Tailwind CSS
-- **State Management**: TanStack Query
+## 🛠️ Tech Stack
 
-## Features
+| Category             | Technology                         |
+| -------------------- | ---------------------------------- |
+| **Framework**        | Next.js 15 with App Router         |
+| **Language**         | TypeScript                         |
+| **AI**               | Mastra with OpenAI integration     |
+| **Database**         | Neon (PostgreSQL) with Drizzle ORM |
+| **Queue**            | Redis with Bee Queue               |
+| **UI**               | Shadcn UI with Tailwind CSS        |
+| **State Management** | TanStack Query                     |
 
-- AI-powered content analysis
-- Background job processing
-- Real-time search capabilities
-- Modern responsive UI
+## ✨ Features
+
+- 🤖 **AI-powered content analysis** - Intelligent content processing using Mastra AI agents
+- ⚡ **Background job processing** - Asynchronous task handling with Redis queues
+- 🔍 **Real-time search capabilities** - Google Search API integration
+- 📱 **Modern responsive UI** - Clean, accessible interface built with Shadcn UI
+- 🔧 **Browser extension support** - Query X extension integration
+- 🎯 **Detailed descriptions** - Enhanced content analysis and description generation
