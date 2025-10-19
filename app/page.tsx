@@ -12,8 +12,10 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { QueryResponse } from "./api/query/route";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 import { ErrorResponse } from "@/src/types/http-response";
+import { useCheckExtensionId } from "@/hooks/useCheckExtensionId";
+import { toast } from "sonner";
+import { SaveExtensionId } from "./_components/save-extension-id";
 
 export default function Home() {
   const router = useRouter();
@@ -21,6 +23,7 @@ export default function Home() {
   const [isFocused, setIsFocused] = useState(false);
   const { data, isLoading, error } = useAutoComplete(query);
   const queryClient = useQueryClient();
+  const hasExtensionId = useCheckExtensionId();
   const {
     mutate: handleSubmit,
     isPending,
@@ -40,6 +43,10 @@ export default function Home() {
       toast.error(data.error || "Something went wrong");
     },
   });
+
+  if (!hasExtensionId) {
+    return <SaveExtensionId />;
+  }
   return (
     <section className="p-4 flex flex-col gap-6 items-center justify-center h-full ">
       <h3 className="text-2xl text-zinc-400">Query X</h3>
