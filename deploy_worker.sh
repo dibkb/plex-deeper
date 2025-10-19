@@ -31,7 +31,7 @@ cd "$APP_DIR"
 if [[ -f package-lock.json ]]; then
   npm ci --unsafe-perm --production
 else
-  npm install --unsafe-perm --production
+  npm install --legacy-peer-deps --unsafe-perm --production
 fi
 
 # -------- Start / reload worker via PM2 -------------------------------------
