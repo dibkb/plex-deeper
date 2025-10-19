@@ -13,9 +13,5 @@ RUN pnpm install
 
 # Copy the rest of the application
 COPY . .
-
-# Build the application
-RUN pnpm build
-
 # Start the app
 CMD ["pnpm", "start:worker"]
