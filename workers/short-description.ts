@@ -58,10 +58,8 @@ shortDescriptionQueue.process(5, async (job) => {
   }
 });
 
-// Keep the process alive and log startup
 console.log("🚀 Short description worker started and listening for jobs...");
 
-// Handle graceful shutdown
 process.on("SIGTERM", () => {
   console.log("📴 Short description worker shutting down gracefully...");
   process.exit(0);

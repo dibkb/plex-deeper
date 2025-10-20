@@ -8,7 +8,7 @@ export function createQueue<T>(name: string, isWorker = false) {
   });
 
   if (isWorker) {
-    const STALL_CHECK_INTERVAL_MS = 20_000;
+    const STALL_CHECK_INTERVAL_MS = 10_000;
     setInterval(() => {
       queue
         .checkStalledJobs()

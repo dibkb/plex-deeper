@@ -61,10 +61,8 @@ detailedDescriptionQueue.process(5, async (job) => {
   }
 });
 
-// Keep the process alive and log startup
 console.log("🚀 Detailed description worker started and listening for jobs...");
 
-// Handle graceful shutdown
 process.on("SIGTERM", () => {
   console.log("📴 Detailed description worker shutting down gracefully...");
   process.exit(0);
@@ -75,7 +73,6 @@ process.on("SIGINT", () => {
   process.exit(0);
 });
 
-// after you create the queue
 detailedDescriptionQueue.on("error", (err) => {
   console.error("Redis error – exiting so PM2 restarts the worker", err);
   process.exit(1);
