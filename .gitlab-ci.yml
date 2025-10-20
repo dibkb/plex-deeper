@@ -34,10 +34,10 @@ deploy:
     - mkdir -p ~/.ssh
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
-    - ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${AWS_EC2_HOST} "echo connected"
+    - ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@${AWS_EC2_HOST} "echo connected"
   script:
     - |
-      ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${AWS_EC2_HOST} "
+      ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@${AWS_EC2_HOST} "
         cd app/query-x
         ./deploy_worker.sh
       "
