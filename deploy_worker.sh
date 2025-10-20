@@ -3,11 +3,8 @@
 
 set -euo pipefail
 
-APP_DIR="/var/www/query-x"
 BRANCH="main"
 PROC_NAME="x-workers"
-
-cd "$APP_DIR"
 
 echo "[deploy] Pulling latest changes …"
 git pull origin "$BRANCH"
