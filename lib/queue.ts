@@ -8,7 +8,7 @@ export function createQueue<T>(name: string, isWorker = false) {
   });
 
   if (isWorker) {
-    const STALL_CHECK_INTERVAL_MS = 30_000;
+    const STALL_CHECK_INTERVAL_MS = 20_000;
     setInterval(() => {
       queue
         .checkStalledJobs()
@@ -24,7 +24,7 @@ export function createQueue<T>(name: string, isWorker = false) {
         .catch((err) => {
           console.error(`${name}: failed to check stalled jobs`, err);
         });
-    }, STALL_CHECK_INTERVAL_MS).unref(); // unref so it doesn't block shutdown
+    }, STALL_CHECK_INTERVAL_MS).unref();
   }
 
   return queue;
