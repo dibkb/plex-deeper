@@ -20,7 +20,7 @@ before_script:
 build:
   stage: build
   script:
-    - pnpm install --frozen-lockfile
+    - pnpm install
     - pnpm build
   only:
     - main
